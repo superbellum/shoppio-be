@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: shopp
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/shoppio
+
+server:
+  port: 8080
+

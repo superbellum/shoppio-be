@@ -10,19 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/shopping-list")
-class ShoppingListController(
-    private val shoppingListService: ShoppingListService
-) {
+class ShoppingListController(private val shoppingListService: ShoppingListService) {
     @GetMapping
-    fun getAllShoppingLists() = shoppingListService.getAllShoppingLists()
+    fun getAllShoppingLists(@RequestParam(required = false, defaultValue = "false") withItems: Boolean) =
+        shoppingListService.getAllShoppingLists(withItems)
 
     @GetMapping("{id}")
-    fun getShoppingListById(@PathVariable id: String) =
-        shoppingListService.getShoppingListById(id)
+    fun getShoppingListById(
+        @PathVariable id: String,
+        @RequestParam(required = false, defaultValue = "false") withItems: Boolean
+    ) = shoppingListService.getShoppingListById(id, withItems)
 
     @PostMapping
     fun createShoppingList(@RequestBody request: CreateShoppingListRequest) =
@@ -33,10 +35,8 @@ class ShoppingListController(
         shoppingListService.patchShoppingList(id, request)
 
     @DeleteMapping
-    fun deleteAllShoppingLists() =
-        shoppingListService.deleteAllShoppingLists()
+    fun deleteAllShoppingLists() = shoppingListService.deleteAllShoppingLists()
 
     @DeleteMapping("{id}")
-    fun deleteShoppingListById(@PathVariable id: String) =
-        shoppingListService.deleteShoppingListById(id)
+    fun deleteShoppingListById(@PathVariable id: String) = shoppingListService.deleteShoppingListById(id)
 }

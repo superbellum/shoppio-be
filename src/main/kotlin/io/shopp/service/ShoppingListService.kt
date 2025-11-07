@@ -3,6 +3,7 @@ package io.shopp.service
 import io.shopp.model.payload.request.CreateShoppingListRequest
 import io.shopp.model.payload.request.PatchShoppingListRequest
 import io.shopp.model.payload.response.ShoppingListResponse
+import io.shopp.repository.ShoppingListItemRepository
 import io.shopp.repository.ShoppingListRepository
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
@@ -10,16 +11,37 @@ import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class ShoppingListService(private val shoppingListRepository: ShoppingListRepository) {
-    fun getAllShoppingLists(): ResponseEntity<List<ShoppingListResponse>> {
+class ShoppingListService(
+    private val shoppingListRepository: ShoppingListRepository,
+    private val shoppingListItemRepository: ShoppingListItemRepository
+) {
+    fun getAllShoppingLists(withItems: Boolean): ResponseEntity<List<ShoppingListResponse>> {
         val shoppingLists = shoppingListRepository.findAll()
-        return ResponseEntity.ok(shoppingLists.map { it.toResponse() })
+        var shoppingListResponses = shoppingLists.map { it.toResponse() }
+
+        if (withItems) {
+            shoppingListResponses = shoppingListResponses.map {
+                it.apply {
+                    items = shoppingListItemRepository.findAllByShoppingListId(id).map { it.toResponse() }
+                }
+            }
+        }
+
+        return ResponseEntity.ok(shoppingListResponses)
     }
 
-    fun getShoppingListById(id: String): ResponseEntity<ShoppingListResponse> {
+    fun getShoppingListById(id: String, withItems: Boolean): ResponseEntity<ShoppingListResponse> {
         val shoppingList = shoppingListRepository.findById(id)
             .orElseThrow { ResponseStatusException(NOT_FOUND, "Shopping list with id '$id' not found") }
-        return ResponseEntity.ok(shoppingList.toResponse())
+
+        return ResponseEntity.ok(
+            shoppingList.toResponse()
+                .apply {
+                    if (withItems) {
+                        items = shoppingListItemRepository.findAllByShoppingListId(id).map { it.toResponse() }
+                    }
+                }
+        )
     }
 
     fun createShoppingList(request: CreateShoppingListRequest): ResponseEntity<ShoppingListResponse> {
@@ -38,8 +60,8 @@ class ShoppingListService(private val shoppingListRepository: ShoppingListReposi
             status = request.status ?: shoppingList.status
         )
 
-        shoppingListRepository.save(updatedShoppingList)
-        return ResponseEntity.ok(updatedShoppingList.toResponse())
+        val savedShoppingList = shoppingListRepository.save(updatedShoppingList)
+        return ResponseEntity.ok(savedShoppingList.toResponse())
     }
 
     fun deleteAllShoppingLists(): ResponseEntity<String> {

@@ -1,6 +1,7 @@
 package io.shopp.model.entity
 
 import io.shopp.model.common.Status
+import io.shopp.model.payload.response.ShoppingListItemResponse
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.LastModifiedDate
@@ -17,7 +18,18 @@ data class ShoppingListItemEntity(
     val imageData: String?,
     val status: Status,
     @CreatedDate
-    val createdDate: Instant,
+    val createdDate: Instant? = null,
     @LastModifiedDate
-    val lastModifiedDate: Instant,
-)
+    val lastModifiedDate: Instant? = null,
+) {
+    fun toResponse() = ShoppingListItemResponse(
+        id = id!!,
+        shoppingListId = shoppingListId,
+        name = name,
+        link = link,
+        imageData = imageData,
+        status = status,
+        createdDate = createdDate!!,
+        lastModifiedDate = lastModifiedDate!!
+    )
+}

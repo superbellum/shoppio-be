@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io</groupId>
-	<artifactId>shopp</artifactId>
+	<artifactId>shoppio-be</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shopp</name>
 	<description>fdh</description>

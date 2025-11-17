@@ -3,6 +3,7 @@ package io.shopp.controller
 import io.shopp.model.payload.request.CreateShoppingListRequest
 import io.shopp.model.payload.request.PatchShoppingListRequest
 import io.shopp.service.ShoppingListService
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/shopping-list")
 class ShoppingListController(private val shoppingListService: ShoppingListService) {

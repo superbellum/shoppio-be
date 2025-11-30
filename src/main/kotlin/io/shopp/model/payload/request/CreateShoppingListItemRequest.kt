@@ -6,13 +6,13 @@ import io.shopp.model.entity.ShoppingListItemEntity
 data class CreateShoppingListItemRequest(
     val name: String,
     val link: String?,
-    val imageData: String?
+    val imageUrl: String?
 ) {
     fun toEntity(shoppingListId: String) = ShoppingListItemEntity(
         shoppingListId = shoppingListId,
         name = name,
         link = link,
-        imageData = imageData,
+        imageUrl = imageUrl,
         status = Status.OPEN,
     )
 }

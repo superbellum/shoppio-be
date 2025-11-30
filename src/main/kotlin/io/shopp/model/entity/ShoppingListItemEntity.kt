@@ -15,7 +15,7 @@ data class ShoppingListItemEntity(
     val shoppingListId: String,
     val name: String,
     val link: String?,
-    val imageData: String?,
+    val imageUrl: String?,
     val status: Status,
     @CreatedDate
     val createdDate: Instant? = null,
@@ -27,7 +27,7 @@ data class ShoppingListItemEntity(
         shoppingListId = shoppingListId,
         name = name,
         link = link,
-        imageData = imageData,
+        imageUrl = imageUrl,
         status = status,
         createdDate = createdDate!!,
         lastModifiedDate = lastModifiedDate!!

@@ -8,7 +8,7 @@ data class ShoppingListItemResponse(
     val shoppingListId: String,
     val name: String,
     val link: String?,
-    val imageData: String?,
+    val imageUrl: String?,
     val status: Status,
     val createdDate: Instant,
     val lastModifiedDate: Instant,

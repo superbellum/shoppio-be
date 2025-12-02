@@ -1,5 +1,6 @@
 package io.shopp.model.entity
 
+import io.shopp.model.common.Priority
 import io.shopp.model.common.Status
 import io.shopp.model.payload.response.ShoppingListItemResponse
 import org.springframework.data.annotation.CreatedDate
@@ -17,6 +18,7 @@ data class ShoppingListItemEntity(
     val link: String?,
     val imageUrl: String?,
     val status: Status,
+    val priority: Priority,
     @CreatedDate
     val createdDate: Instant? = null,
     @LastModifiedDate
@@ -29,6 +31,7 @@ data class ShoppingListItemEntity(
         link = link,
         imageUrl = imageUrl,
         status = status,
+        priority = priority,
         createdDate = createdDate!!,
         lastModifiedDate = lastModifiedDate!!
     )

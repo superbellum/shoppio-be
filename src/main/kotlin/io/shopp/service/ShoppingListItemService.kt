@@ -42,6 +42,7 @@ class ShoppingListItemService(private val shoppingListItemRepository: ShoppingLi
             link = request.link ?: shoppingListItem.link,
             imageUrl = request.imageUrl ?: shoppingListItem.imageUrl,
             status = request.status ?: shoppingListItem.status,
+            priority = request.priority ?: shoppingListItem.priority,
         )
 
         val savedItem = shoppingListItemRepository.save(updatedItem)

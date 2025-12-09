@@ -16,7 +16,7 @@ data class ShoppingListItemEntity(
     val shoppingListId: String,
     val name: String,
     val link: String?,
-    val imageUrl: String?,
+    val imageUrl: String,
     val status: Status,
     val priority: Priority,
     @CreatedDate

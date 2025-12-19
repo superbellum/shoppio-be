@@ -39,6 +39,7 @@ class ShoppingListItemService(private val shoppingListItemRepository: ShoppingLi
 
         val updatedItem = shoppingListItem.copy(
             name = request.name ?: shoppingListItem.name,
+            description = request.description ?: shoppingListItem.description,
             link = request.link ?: shoppingListItem.link,
             imageUrl = request.imageUrl ?: shoppingListItem.imageUrl,
             status = request.status ?: shoppingListItem.status,
